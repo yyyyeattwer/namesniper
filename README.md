@@ -1,0 +1,1 @@
+all this does is generates a bunch of random usernames while using the roblox signin api, and it tells you whether or not a username that was generated is taken or not. its not the best, and its a lil slow, but its alright
