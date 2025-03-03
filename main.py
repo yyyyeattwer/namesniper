@@ -22,10 +22,10 @@ USER_AGENTS = [
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
 ]
 
-# Track checked usernames across runs
+# track usernames
 checked_usernames = set()
 
-# Generate a batch of unique usernames
+# generate users
 def generate_unique_usernames(count):
     new_usernames = set()
     while len(new_usernames) < count:
@@ -35,7 +35,7 @@ def generate_unique_usernames(count):
             new_usernames.add(username)
     return list(new_usernames)
 
-# Check if a username is available
+# checks if a username is available
 async def check_username_availability(session, username):
     url = f"https://auth.roblox.com/v1/usernames/validate?username={username}&birthday=2000-01-01"
     headers = {"User-Agent": random.choice(USER_AGENTS)}
@@ -47,10 +47,10 @@ async def check_username_availability(session, username):
                     data = await response.json()
                     return username, data.get("code") == 0
         except:
-            await asyncio.sleep(0.5)  # Shorter delay on retry
+            await asyncio.sleep(0.5) 
     return username, False
 
-# Process a batch of usernames
+# process usernames
 async def process_usernames():
     async with aiohttp.ClientSession() as session:
         while True:  # Infinite loop for continuous execution
@@ -71,7 +71,7 @@ async def process_usernames():
             print(f"\n✅ Batch complete. Waiting {DELAY_BETWEEN_BATCHES}s before next batch...")
             await asyncio.sleep(DELAY_BETWEEN_BATCHES)
 
-# Clean up files on script exit
+# clean up files on exit
 def cleanup():
     print("\n🧹 Cleaning up before exit...")
     for file in [LOG_FILE, HITS_FILE]:
@@ -82,13 +82,13 @@ def cleanup():
         except Exception as e:
             print(f"⚠️ Error deleting {file}: {e}")
 
-# Handle exit signals (CTRL+C, script close, etc.)
+
 def signal_handler(sig, frame):
     cleanup()
     print("Exiting..")
     exit(0)
 
-# Register signal handlers
+
 signal.signal(signal.SIGINT, signal_handler)  # Handle CTRL+C
 signal.signal(signal.SIGTERM, signal_handler)  # Handle process termination
 
