@@ -53,7 +53,7 @@ async def check_username_availability(session, username):
 # process usernames
 async def process_usernames():
     async with aiohttp.ClientSession() as session:
-        while True:  # Infinite loop for continuous execution
+        while True:
             usernames = generate_unique_usernames(CHECKS_PER_BATCH)
             tasks = [check_username_availability(session, username) for username in usernames]
 
